@@ -22,7 +22,7 @@ const sessionOptions = {
       saveUninitialized: false,
     
       store: new sessionStore({
-        knex: require("../database/dbConfig.js"),
+        knex: require("../database/dbconfig"),
         tablename: "sessions",
         sidfieldname: "sid",
         createtable: true,
