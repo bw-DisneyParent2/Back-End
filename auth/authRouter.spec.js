@@ -5,7 +5,7 @@ const db = require('../database/dbconfig');
 // describe.only() { will only run one test =) }
 
 describe('should reigster a new user', () => {
-  it('should returns a JSON', async () => {
+  it('should return a JSON', async () => {
     const res = await request(server).post('/api/auth/register')
     .send({
       "email": "Grayson@daley.com",
