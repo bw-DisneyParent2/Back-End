@@ -34,6 +34,10 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.get('/', (req, res) => {
+  res.send("Backend for Disney Parents 2");
+}); 
+
 server.use(session(sessionOptions));
 server.use('/api/auth', authRouter);
 server.use('/api/parents', parentsRouter);
