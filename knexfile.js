@@ -8,6 +8,11 @@ module.exports = {
       filename: './database/parents.db3',
     },
     useNullAsDefault: true,
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreigh_keys = ON', done);
+      },
+    },
     migrations: {
       directory: './database/migrations',
     },

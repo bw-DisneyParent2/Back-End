@@ -8,23 +8,23 @@ module.exports = {
   };
 
   function find() {
-      return db('users')
-          .select('id', 'username');
+      return db('parents')
+          .select('id', 'email');
   };
   
   function findBy(filter) {
-      return db('users')
+      return db('parents')
           .where(filter);
   };
   
-  async function add(user) {
-      const [id] = await db('users').insert(user);
+  async function add(parent) {
+      const [id] = await db('parents').insert(parent);
   
       return findById(id);
   };
   
   function findById(id) {
-      return db('users')
+      return db('parents')
           .where({ id })
           .first();
   };

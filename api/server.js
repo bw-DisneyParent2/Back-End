@@ -4,10 +4,9 @@ const helmet = require("helmet");
 const session = require("express-session");
 const sessionStore = require("connect-session-knex")(session);
 
-// const authenticate = require("../auth/authenticate-middleware.js");
-// const authRouter = require("../auth/auth-router.js");
-// { change users to parents when ready }
-// const userRouter = require("../users/users-router");
+const authenticate = require('../auth/authenticate-middleware');
+const authRouter = require("../auth/auth-router");
+const parentsRouter = require("../parents/parents-router");
 
 const server = express();
 
@@ -35,9 +34,8 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-// { change to necessary routers  }
-// server.use(session(sessionOptions));
-// server.use("/api/auth", authRouter);
-// server.use("/api/users", userRouter);
+server.use(session(sessionOptions));
+server.use('/api/auth', authRouter);
+server.use('/api/parents', parentsRouter);
 
 module.exports = server;
