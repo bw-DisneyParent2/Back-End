@@ -41,4 +41,18 @@ router.post('/register', (req, res) => {
     });
   });
 
+router.delete('/logout', (req, res) => {
+  if (req.session) {
+      req.session.destroy((err) => {
+          if (err) {
+              res.status(400).json({ message: 'Error Logging out', err });
+          } else {
+              res.send('See you again soon!');
+          }
+      })
+  } else {
+      res.end();
+  }
+});
+
     module.exports = router;
