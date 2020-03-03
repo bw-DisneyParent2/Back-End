@@ -3,6 +3,7 @@ const server = require('../api/server');
 const db = require('../database/dbconfig');
 const Parent = require('../parents/parents-model');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // describe.only() { will only run one test =) }
 async function createUser(email, password) {
@@ -12,6 +13,20 @@ async function createUser(email, password) {
   };
 
   await Parent.add(parent)
+}
+
+function genToken(parent) {
+  const payload = {
+    parentid: parent.id,
+    email: parent.email,
+
+    roles: ['parents']
+  };
+
+  const options = { expiresIn: '1h' };
+  const token = jwt.sign(payload, secrets.jwtSecret, options);
+
+  return token;
 }
 
 
@@ -35,7 +50,7 @@ describe('POST /login', () => {
           "email": "Hulk",
           "password": "smash"
       });
-      console.log(res.body);
+      // console.log(res.body);
       expect(res.type).toEqual('application/json');
       expect(res.status).toEqual(200);
   });
