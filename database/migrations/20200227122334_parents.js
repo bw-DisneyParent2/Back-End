@@ -24,6 +24,10 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       parents.string('password', 255).notNullable();
+      parents.string('name', 255).notNullable();
+      parents.integer('number_of_kids').notNullable();
+      parents.string('ride', 255).notNullable();
+      parents.string('time').notNullable();
     });
 };
 
