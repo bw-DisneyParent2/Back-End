@@ -35,7 +35,11 @@ describe('should reigster a new user', () => {
     const res = await request(server).post('/api/auth/register')
     .send({
       "email": "Grayson@daley.com",
-      "password": "YesPleASE!"
+      "password": "YesPleASE!",
+      "name": "Grayson",
+      "number_of_kids": 4,
+      "ride": "Space Mountain",
+      "time": "5:00 PM"
     });
     console.log(res.body);
     expect(res.type).toEqual('application/json');
@@ -44,13 +48,13 @@ describe('should reigster a new user', () => {
 
 describe('POST /login', () => {
   it('should accept valid credentials', async () => {
-      await createUser("Hulk","smash");
+      await createUser("Hulk","Smash");
       const res = await request(server).post('/api/auth/login')
       .send({
           "email": "Hulk",
-          "password": "smash"
+          "password": "Smash"
       });
-      // console.log(res.body);
+      console.log(res.body);
       expect(res.type).toEqual('application/json');
       expect(res.status).toEqual(200);
   });
