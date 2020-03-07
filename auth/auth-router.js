@@ -60,9 +60,7 @@ router.delete('/logout', (req, res) => {
 function genToken(parent) {
   const payload = {
     parentid: parent.id,
-    email: parent.email,
-
-    roles: ['parents']
+    email: parent.email
   };
 
   const options = { expiresIn: '1h' };

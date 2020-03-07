@@ -29,7 +29,7 @@ function genToken(parent) {
   return token;
 }
 
-
+// ========================================================================
 describe('should reigster a new user', () => {
   it('should return a JSON', async () => {
     const res = await request(server).post('/api/auth/register')
@@ -43,9 +43,10 @@ describe('should reigster a new user', () => {
     });
     console.log(res.body);
     expect(res.type).toEqual('application/json');
+    expect(res.status).toEqual(201);
   })
 });
-
+// ========================================================================
 describe('POST /login', () => {
   it('should accept valid credentials', async () => {
       await createUser("Hulk","Smash");
@@ -58,8 +59,18 @@ describe('POST /login', () => {
       expect(res.type).toEqual('application/json');
       expect(res.status).toEqual(200);
   });
-});
 
+  it('should reject creds for non-existent user', async () => {
+    const res = await request(server).post('/api/auth/login')
+    .send({
+        "email": "fake-hulk",
+        "password": "crash"
+    });
+    console.log(res.body);
+    expect(res.status).toEqual(401);
+  })
+});
+// ========================================================================
 beforeEach( async () => {
   await db ('parents').truncate();
 })
