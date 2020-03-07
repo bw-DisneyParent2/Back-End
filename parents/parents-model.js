@@ -12,7 +12,7 @@ module.exports = {
 
   function find() {
       return db('parents')
-          .select('id', 'email');
+          .select('id', 'email', 'name', 'number_of_kids', 'ride', 'time');
   };
   
   function findBy(filter) {
