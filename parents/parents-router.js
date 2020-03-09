@@ -50,7 +50,7 @@ router.delete("/:id", authorized, async (req, res) => {
 
   try {
     const deleted = await Parents.remove(id);
-    res.status(200).json({ message: `Successfully removed the parent ${id}.` });
+    res.status(200).json({ message: `Successfully removed the parent  ${id}.` });
   } catch (err) {
     res
       .status(500)

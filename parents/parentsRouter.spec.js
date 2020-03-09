@@ -8,7 +8,7 @@ const authorized = require("../auth/authenticate-middleware");
 describe('GET /api/parents', () => {
   it('should return registered users', async () => {
     const res = await request(server)
-      .get('/api/parents', authorized );
+      .get('/api/parents');
       console.log(res.body);
       expect(res.type).toEqual('application/json');
   });
@@ -19,10 +19,10 @@ describe('GET /api/parents', () => {
 describe('GET /parents/:id', () => {
   it('should get one parent via ID', async () => {
       const res = await request(server)
-        .get('/api/parents/1', authorized );
+        .get('/api/parents/1');
         console.log(res.body);
         expect(res.type).toEqual('application/json');
-        // expect(res.entity.name).toBe(Admin);
+        // expect(res.parents.name).toBe('Admin');
   });
 });
 
