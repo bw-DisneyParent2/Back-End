@@ -19,10 +19,23 @@ describe('GET /api/parents', () => {
 describe('GET /parents/:id', () => {
   it('should get one parent via ID', async () => {
       const res = await request(server)
-        .get('/api/parents/1');
+        .get('/api/parents/1', authorized);
         console.log(res.body);
         expect(res.type).toEqual('application/json');
         // expect(res.parents.name).toBe('Admin');
+  });
+});
+
+describe('PUT /parents/:id', () => {
+  it('Test my secure routes to update', async () => {
+      const res = await request(server)
+        .put('/api/parents/1', authorized )
+        .send({ 
+          "number_of_kids": 4
+        });
+        console.log(res.body);
+        expect(res.type).toEqual('application/json');
+        expect(res.status).toBe(401);    
   });
 });
 
