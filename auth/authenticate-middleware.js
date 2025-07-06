@@ -9,9 +9,10 @@
 const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets.js');
 
-
 module.exports = ( req,res,next ) => {
-  const token = req.headers.authorization;
+  if(!req.headers.authorization) res.status(401).json({ code: 401, message: "Missing log in token, Please Log in and try again."})
+
+  const token = req.headers.authorization.split(" ")[1];
 
   if (req.decodedJwt) {
     next();

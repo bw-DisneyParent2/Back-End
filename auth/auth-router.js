@@ -6,24 +6,33 @@ const secrets = require('../config/secrets');
 const Parents = require('../parents/parents-model');
 // ======================================================================================
 router.post('/register', (req, res) => {
-  let data = req.body;
-  const hash = bcrypt.hashSync(data.password,12);
-  data.password = hash;
+  if(!req.body) res.status(403).json({ code: 403, message: "Please provide the parent data to register." });
 
-  Parents.add(data)
-  .then(saved => {
-    const token = genToken(saved);
-    res.status(201).json({ created_user: saved, token: token });
-    // res.status(201).json(saved);
-  })
-  .catch(error => {
-    console.log(error);
-    res.status(501).json(error);
-  });
+  let data = req.body;
+  if(!data.email || !data.password || !data.first_name || !data.last_name || !data.number_of_kids) {
+    res.status(403).json({ code: 403, message: "Missing parent details, please provide all required details and try again." });
+  } else {
+
+    const hash = bcrypt.hashSync(data.password,12);
+    data.password = hash;
+
+    Parents.add(data)
+    .then(saved => {
+      const token = genToken(saved);
+      res.status(201).json({ created_user: saved, token: token });
+      // res.status(201).json(saved);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(501).json(error);
+    });
+  }
 });
 // ======================================================================================      
   router.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    if(!req.body) res.status(403).json({ code: 403, message: "Please Provide email and password." });
+
+    const { email, password } = req.body;    
   
     Parents.findBy({ email })
       .first()
@@ -38,8 +47,8 @@ router.post('/register', (req, res) => {
       })
       .catch (err => {
         console.log(err);
-      res.status(500).json({ message: 'id10t error', err });
-    });
+        res.status(500).json({ message: 'id10t error', err });
+      });
   });
 //======================================================================================
 router.delete('/logout', (req, res) => {
@@ -49,7 +58,7 @@ router.delete('/logout', (req, res) => {
             console.log(err);
               res.status(400).json({ message: 'Error Logging out', err });
           } else {
-              res.send('See you again soon!');
+              res.send('See you real soon!');
           }
       })
   } else {

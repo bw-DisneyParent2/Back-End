@@ -1,22 +1,6 @@
 
 exports.up = function(knex) {
   return knex.schema
-    .createTable('kidSwap', tbl => {
-      tbl.increments();
-      tbl.string('ride').notNullable();
-      tbl.string('time').notNullable();
-      tbl.integer('parent_id')
-        .notNullable()
-        .references('parents.id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-      tbl.integer('volunteer_id')
-        .notNullable()
-        .references('parents.id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-    })
-
     .createTable('parents', parents => {
       parents.increments();
       parents
@@ -24,15 +8,38 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       parents.string('password', 255).notNullable();
-      parents.string('name', 255);
-      parents.integer('number_of_kids');
-      parents.string('ride', 255);
-      parents.string('time');
-    });
+      parents.string('first_name', 255).notNullable();
+      parents.string('last_name', 255).notNullable();
+      parents.integer('number_of_kids').notNullable().defaultTo(0).checkBetween([1, 5]);
+    })
+    .createTable('swapRequest', tbl => {
+      tbl.increments();
+      tbl.string('ride').notNullable();
+      tbl.string('time').notNullable();
+      tbl.integer('requester_id')
+        .notNullable()
+        .references('parents.id')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+    })
+    .createTable('swapConnect', tbl => {
+      tbl.integer('request_id')
+        .unsigned()
+        .primary()
+        .references('swapRequest.id')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+      tbl.integer('volunteer_id')
+        .notNullable()
+        .references('parents.id')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+    })    
 };
 
 exports.down = function(knex, promise) {
   return knex.schema
-    .dropTableIfExists('parents')
-    .dropTableIfExists('kidSwap')
+    .dropTableIfExists('swapConnect')
+    .dropTableIfExists('swapRequest')
+    .dropTableIfExists('parents');
 };

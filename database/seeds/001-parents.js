@@ -6,10 +6,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('parents').insert([
-        {id: 1, email: 'admin', password: 'password', name: "Admin", number_of_kids: 1, ride: "space mountain", time: "5:00 pm"},
-        {id: 2, email: 'kylee@daley.com', password: 'PassWord2', name: "Kylee", number_of_kids: 3, ride: "splash mountain", time: "10:00 am"},
-        {id: 3, email: 'Chris@daley.com', password: 'PassWord3', name: "Chris", number_of_kids: 3, ride: "Matterhorn", time: "8:00 pm"},
-        {id: 4, email: "Hulk", password: "$2a$08$PmmGcseR7fdGefuHQ5suPuXbsUXBdLEA30jfIWvRaODEf.OBAlsdG", name: "Hulk", number_of_kids: 3, ride: "Hulk Coaster", time: "5:30 PM"}
+        {id: 1, email: 'admin', password: '$2a$12$t1yQoD2rig1oH0OD.uQI5eFoFUAXDR4u4w5ReNtTqv29pFiZvlLem', first_name: "Admin", last_name: "User", number_of_kids: 1},
+        {id: 2, email: 'kylee@smith.com', password: '$2a$12$ALBT1IF591f.9l18mcvTpuzXPf2uRBtu68qSb3UCsXnqtU8E7pvzO', first_name: "Kylee", last_name: "Smith", number_of_kids: 3},
+        {id: 3, email: 'Chris@daley.com', password: '$2a$12$WGMeiaQbBPILaoAWwoPmP./gik0i0lzx/zdklaOS15XthjIdwO88i', first_name: "Chris", last_name: "Daley", number_of_kids: 5},
       ]);
     })
 };

@@ -12,7 +12,7 @@ module.exports = {
 
   function find() {
       return db('parents')
-          .select('id', 'email', 'name', 'number_of_kids', 'ride', 'time');
+          .select('id', 'email', 'first_name', 'last_name', 'number_of_kids');
   };
   
   function findBy(filter) {
@@ -36,11 +36,11 @@ module.exports = {
     return db('parents')
         .where({ id })
         .update(data);
+    
 };
 
 function remove(id) {
     return db('parents')
-        .select('email', 'name', 'number_of_kids', 'ride', 'time')
         .where({ id })
         .del();
 };
