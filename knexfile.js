@@ -1,6 +1,6 @@
 // Update with your config settings.
 const dbConnection = process.env.DATABASE_URL;
-
+const db_url = 'postgresql://neondb_owner:npg_4vK1gCVTSLkp@ep-lingering-moon-a8vn791w-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require'
 
 module.exports = {
 
@@ -39,7 +39,7 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: dbConnection,
+    connection: db_url,
     useNullAsDefault: true,
     migrations: {
       directory: './database/migrations'
