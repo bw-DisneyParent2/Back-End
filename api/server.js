@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const session = require("express-session");
 const sessionStore = require("connect-session-knex")(session);
 const knexConfig = require("../database/dbconfig");
+const secrets = require("../config/secrets")
 
 const authRouter = require("../auth/auth-router");
 const parentsRouter = require("../parents/parents-router");
@@ -13,7 +14,7 @@ const server = express();
 
 const sessionOptions = {
   name: "ItsDangerousOut",
-  secret: "TakeThis",
+  secret: secrets.jwtSecret,
   cookie: {
     maxAge: 1000 * 60 * 30,
     secure: false,
@@ -51,7 +52,7 @@ server.get('/token', (req, res) => {
     favoriteChili: 'red hot chili peppers'
   };
 
-  const secret = 'takethis';
+  const secret = secrets.jwtSecret;
   const options = {
     expiresIn: '1h'
   };
