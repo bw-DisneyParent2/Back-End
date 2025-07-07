@@ -12,10 +12,10 @@ exports.up = function(knex) {
       parents.string('last_name', 255).notNullable();
       parents.integer('number_of_kids').notNullable().defaultTo(0).checkBetween([1, 5]);
     })
-    .createTable('swapRequest', tbl => {
+    .createTable('swapRequests', tbl => {
       tbl.increments();
       tbl.string('ride').notNullable();
-      tbl.string('time').notNullable();
+      tbl.string('connect_time').notNullable();
       tbl.integer('requester_id')
         .notNullable()
         .references('parents.id')

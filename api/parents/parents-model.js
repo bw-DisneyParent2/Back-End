@@ -1,4 +1,4 @@
-const db = require('../database/dbconfig');
+const db = require('../../database/dbconfig');
 
 
 module.exports = {
@@ -22,7 +22,6 @@ module.exports = {
   
   async function add(parent) {
     const dbClient = db.client.config.client || db.client.dialect;
-    console.log("DB Client:", dbClient); // for debugging
 
     let id;
 

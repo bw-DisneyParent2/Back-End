@@ -1,7 +1,7 @@
 const request = require('supertest');
-const server = require('../api/server');
+const server = require('../server');
 const Parent = require('../parents/parents-model');
-const db = require('../database/dbconfig');
+const db = require('../../database/dbconfig');
 const authorized = require("../auth/authenticate-middleware");
 
 

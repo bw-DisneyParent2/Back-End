@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const secrets = require('../config/secrets');
+const secrets = require('../../config/secrets');
 
 const Parents = require('../parents/parents-model');
 // ======================================================================================

@@ -7,8 +7,9 @@ const sessionStore = require("connect-session-knex")(session);
 const knexConfig = require("../database/dbconfig");
 const secrets = require("../config/secrets")
 
-const authRouter = require("../auth/auth-router");
-const parentsRouter = require("../parents/parents-router");
+const authRouter = require("./auth/auth-router");
+const parentsRouter = require("./parents/parents-router");
+const requestsRouter = require("./requests/requests-router");
 
 const server = express();
 
@@ -43,6 +44,7 @@ server.get('/', (req, res) => {
 server.use(session(sessionOptions));
 server.use('/api/auth', authRouter);
 server.use('/api/parents', parentsRouter);
+server.use('/api/requests', requestsRouter);
 
 server.get('/token', (req, res) => {
 

@@ -7,7 +7,7 @@
 //     };
 
 const jwt = require('jsonwebtoken');
-const secrets = require('../config/secrets.js');
+const secrets = require('../../config/secrets.js');
 
 module.exports = ( req,res,next ) => {
   if(!req.headers.authorization) res.status(401).json({ code: 401, message: "Missing log in token, Please Log in and try again."})
