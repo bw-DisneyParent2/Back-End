@@ -21,8 +21,17 @@ module.exports = {
   };
   
   async function add(parent) {
-      const [id] = await db('parents').insert(parent);
-  
+    const dbClient = db.client.config.client;
+
+    let id;
+
+    if (dbClient === "pg") {
+        const result = await db('parents').insert(parent).returning('id');
+        id = typeof result[0] === 'object' ? result[0].id : result[0];
+    } else {
+        const [insertedId] = await db("parents").insert(parent);
+        id = insertedId
+    }
       return findById(id);
   };
   
