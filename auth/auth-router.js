@@ -6,31 +6,31 @@ const secrets = require('../config/secrets');
 const Parents = require('../parents/parents-model');
 // ======================================================================================
 router.post('/register', (req, res) => {
-  if(!req.body) res.status(403).json({ code: 403, message: "Please provide the parent data to register." });
+  if(!req.body) return res.status(403).json({ code: 403, message: "Please provide the parent data to register." });
 
   let data = req.body;
   if(!data.email || !data.password || !data.first_name || !data.last_name || !data.number_of_kids) {
-    res.status(403).json({ code: 403, message: "Missing parent details, please provide all required details and try again." });
-  } else {
+    return res.status(403).json({ code: 403, message: "Missing parent details, please provide all required details and try again." });
+  } 
 
-    const hash = bcrypt.hashSync(data.password,12);
-    data.password = hash;
+  const hash = bcrypt.hashSync(data.password,12);
+  data.password = hash;
 
-    Parents.add(data)
-    .then(saved => {
-      const token = genToken(saved);
-      res.status(201).json({ created_user: saved, token: token });
-      // res.status(201).json(saved);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(501).json(error);
-    });
-  }
+  Parents.add(data)
+  .then(saved => {
+    const token = genToken(saved);
+    return res.status(201).json({ created_user: saved, token: token });
+    // res.status(201).json(saved);
+  })
+  .catch(error => {
+    console.log(error);
+    return res.status(500).json({ code: 500, message: "Something went wrong creating the account.", error });
+  });
+  
 });
 // ======================================================================================      
   router.post('/login', (req, res) => {
-    if(!req.body) res.status(403).json({ code: 403, message: "Please Provide email and password." });
+    if(!req.body) return res.status(403).json({ code: 403, message: "Please Provide email and password." });
 
     const { email, password } = req.body;    
   
@@ -40,14 +40,14 @@ router.post('/register', (req, res) => {
         if (log && bcrypt.compareSync(password, log.password)) {
           req.session.loggedin = true;
           const token = genToken(log);
-            res.status(200).json({ email: log.email, token: token });
+          return res.status(200).json({ email: log.email, token: token });
         } else {
-            res.status(401).json({ message: 'Invalid Credentials' });
+          return res.status(401).json({ message: 'Invalid Credentials' });
         }
       })
       .catch (err => {
         console.log(err);
-        res.status(500).json({ message: 'id10t error', err });
+        return res.status(500).json({ message: 'id10t error', err });
       });
   });
 //======================================================================================
@@ -56,13 +56,13 @@ router.delete('/logout', (req, res) => {
       req.session.destroy((err) => {
           if (err) {
             console.log(err);
-              res.status(400).json({ message: 'Error Logging out', err });
+              return res.status(400).json({ message: 'Error Logging out', err });
           } else {
-              res.send('See you real soon!');
+              return res.send('See you real soon!');
           }
       })
   } else {
-      res.end();
+      return res.end();
   }
 });
 //=================================================================================================================================
