@@ -21,11 +21,12 @@ module.exports = {
   };
   
   async function add(parent) {
-    const dbClient = db.client.config.client;
+    const dbClient = db.client.config.client || db.client.dialect;
+    console.log("DB Client:", dbClient); // for debugging
 
     let id;
 
-    if (dbClient === "pg") {
+    if (['pg', 'postgresql'].includes(dbClient)) {
         const result = await db('parents').insert(parent).returning('id');
         id = typeof result[0] === 'object' ? result[0].id : result[0];
     } else {
