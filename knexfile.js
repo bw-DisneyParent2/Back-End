@@ -38,7 +38,12 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: dbConnection,
+    connection: {
+      connectionString: dbConnection,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
     useNullAsDefault: true,
     migrations: {
       directory: './database/migrations'
