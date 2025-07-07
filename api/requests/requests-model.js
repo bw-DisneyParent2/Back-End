@@ -15,7 +15,7 @@ module.exports = {
         }
         return await module.exports.findById(id);
       },
-      find: () => {
+      find: (parentid) => {
         return db('swapRequests as sr')
             .leftJoin('parents as p', 'sr.requester_id', 'p.id')
             .select('sr.id', 
@@ -23,7 +23,8 @@ module.exports = {
                 'sr.connect_time', 
                 'p.first_name as requester_first_name', 
                 'p.last_name as requester_last_name', 
-                'p.number_of_kids as requester_kids');
+                'p.number_of_kids as requester_kids')
+            .whereNot('sr.requester_id', parentid);
       },
       findBy: (filter) => {
         return db('swapRequests as sr')

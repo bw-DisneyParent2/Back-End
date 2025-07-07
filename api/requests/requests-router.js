@@ -3,8 +3,9 @@ const Requests = require("./requests-model");
 const authorized = require("../auth/authenticate-middleware");
 
 router.get("/", authorized, (req, res) => {
+    const { parentid } = req.decodedJwt;
 
-    Requests.find()
+    Requests.find(parentid)
         .then(requests => {
             res.status(200).json(requests);
         })
